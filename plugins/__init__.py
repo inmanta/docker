@@ -16,11 +16,9 @@
     Contact: code@inmanta.com
 """
 
-from inmanta.agent.handler import provider, ResourceHandler
-from inmanta.execute.util import Unknown
-from inmanta.resources import Resource, resource, ResourceNotFoundExcpetion
-
 from docker import Client
+from inmanta.agent.handler import ResourceHandler, provider
+from inmanta.resources import Resource, resource
 
 
 @resource("docker::Container", agent="service.host.name", id_attribute="name")
@@ -28,7 +26,16 @@ class Container(Resource):
     """
         This class represents a docker container
     """
-    fields = ("name", "image", "state", "detach", "memory_limit", "command", "entrypoint")
+
+    fields = (
+        "name",
+        "image",
+        "state",
+        "detach",
+        "memory_limit",
+        "command",
+        "entrypoint",
+    )
 
 
 @provider("docker::Container", name="docker")
@@ -61,7 +68,6 @@ class ContainerHandler(ResourceHandler):
             if search_name in names:
                 docker_resource = container
 
-
         if docker_resource is None:
             current.state = "purged"
             return current
@@ -83,10 +89,16 @@ class ContainerHandler(ResourceHandler):
                 if len(images) == 0:
                     msg = self._client.pull(resource.image)
                     if "not found" in msg:
-                        raise Exception("Failed to pull image %s: %s" % (resource.image, msg))
+                        raise Exception(
+                            "Failed to pull image %s: %s" % (resource.image, msg)
+                        )
 
-                cont = self._client.create_container(image=resource.image, command=resource.command, detach=resource.detach,
-                                                     host_config={"memory_limit": resource.memory_limit})
+                cont = self._client.create_container(
+                    image=resource.image,
+                    command=resource.command,
+                    detach=resource.detach,
+                    host_config={"memory_limit": resource.memory_limit},
+                )
                 self._client.start(cont["Id"])
                 self._client.rename(cont["Id"], resource.name)
 
@@ -101,9 +113,8 @@ class ContainerHandler(ResourceHandler):
 
                 ctx.set_purged()
 
-    def facts(self, resource : Container):
+    def facts(self, resource: Container):
         """
             Get facts about this resource
         """
         return {}
-
