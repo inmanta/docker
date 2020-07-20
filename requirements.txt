@@ -1,6 +1,5 @@
 docker-py==1.10.6
 
-# Transitive dependencies
 certifi==2020.6.20
 chardet==3.0.4
 docker-pycreds==0.4.0
