@@ -24,7 +24,7 @@ from inmanta.resources import Resource, resource
 @resource("docker::Container", agent="service.host.name", id_attribute="name")
 class Container(Resource):
     """
-        This class represents a docker container
+    This class represents a docker container
     """
 
     fields = (
@@ -79,7 +79,7 @@ class ContainerHandler(ResourceHandler):
 
     def do_changes(self, ctx, resource: Container, changes) -> bool:
         """
-            Enforce the changes
+        Enforce the changes
         """
         if "state" in changes:
             state = changes["state"]
@@ -115,6 +115,6 @@ class ContainerHandler(ResourceHandler):
 
     def facts(self, resource: Container):
         """
-            Get facts about this resource
+        Get facts about this resource
         """
         return {}
