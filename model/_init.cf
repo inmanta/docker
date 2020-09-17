@@ -50,7 +50,7 @@ end
 
 implement Container using std::none
 
-Service service [1] -- [0:] Container containers
+Service.containers [0:] -- Container.service [1]
 
 entity Port:
     """
@@ -61,7 +61,7 @@ entity Port:
     ip::port container_port
 end
 
-Container container [1] -- [0:] Port ports
+Container.ports [0:] -- Port.container [1]
 
 entity Volume:
     """
@@ -72,7 +72,7 @@ entity Volume:
     string options = "rw"
 end
 
-Container container [1] -- [0:] Volume volumes
+Container.volumes [0:] -- Volume.container [1]
 
 implementation docker for Service:
     docker_pkg = std::Package(host=host, name="docker", state="installed")
