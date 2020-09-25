@@ -16,9 +16,10 @@
     Contact: code@inmanta.com
 """
 
-from docker import Client
 from inmanta.agent.handler import ResourceHandler, provider
 from inmanta.resources import Resource, resource
+
+from docker import Client
 
 
 @resource("docker::Container", agent="service.host.name", id_attribute="name")
@@ -41,7 +42,7 @@ class Container(Resource):
 @provider("docker::Container", name="docker")
 class ContainerHandler(ResourceHandler):
     @classmethod
-    def is_available(self, io):
+    def is_available(cls, io):
         return True
 
     def __init__(self, agent, io=None):
