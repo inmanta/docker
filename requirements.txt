@@ -6,5 +6,5 @@ docker-pycreds==0.4.0
 idna==2.10
 requests==2.25.0
 six==1.15.0
-urllib3==1.25.11
+urllib3==1.26.1
 websocket-client==0.57.0
