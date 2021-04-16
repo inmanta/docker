@@ -1,3 +1,6 @@
+# V0.4.7
+- Update inmanta-dev-dependencies package
+
 # V0.4.6
 - Remove transitive dependencies
 
